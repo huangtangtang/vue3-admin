@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw }  from 'vue-router';
 import Layout from '@/layout/index.vue'
+// import children from "pages-generated"; // vite-plugin-pages 生成的路由信息
+
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
