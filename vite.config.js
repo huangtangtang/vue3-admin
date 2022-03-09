@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import path, { resolve } from 'path' 
+import { resolve } from 'path' 
+// import path, { resolve } from 'path' 
+import path from 'path-browserify'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons' 
 import VitePages from "vite-plugin-pages";
 import fs from "fs-extra";
@@ -12,6 +14,7 @@ export default defineConfig({
 resolve: {
     alias: { // 配置别名
       "@": resolve(__dirname, "src"),
+      path: "path-browserify"
     },
   },
   css: {

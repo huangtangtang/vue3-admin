@@ -1,6 +1,8 @@
 <template>
   <div class="app-wrapper">
-    <div class="sidebar-container">sidebar</div>
+    <div class="sidebar-container">
+      <Sidebar/>
+    </div>
     <div class="main-container">
       <div class="header">
         <div class="navbar">navbar</div>
@@ -13,8 +15,17 @@
     </div>
   </div>
 </template>
+<script>
+//  import Sidebar from './components/Sidebar'
+import Sidebar from "./components/Sidebar/index.vue"
+export default {
+  components: {
+    Sidebar
+  }
+}
+</script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped> 
   .app-wrapper {
     display: flex;
     width: 100%;
