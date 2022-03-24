@@ -4,6 +4,6 @@
       "module": "esnext",
       "moduleResolution": "node"
     },
-    "include": ["vite.config.ts", "vue.config.ts"]
+    "include": ["vite.config.js", "vue.config.ts"]
   }
   

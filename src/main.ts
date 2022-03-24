@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import router from './router/index';
+import { createApp } from 'vue' 
+import router from './router/index'
 import store from './store'
 import App from './App.vue'
 import 'normalize.css/normalize.css'
@@ -28,7 +28,7 @@ declare module '@vue/runtime-core' {
     $alert: typeof ElMessageBox.alert;
     $prompt: typeof ElMessageBox.prompt;
     $ELEMENT: {
-      size:Size
+      size: Size
     }
   }
 }

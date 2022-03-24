@@ -14,7 +14,9 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "documentation" */ '@/views/documentation/index.vue'),
         meta: {
           title: 'Documentation',
-          icon: 'documentation'
+          icon: 'documentation',
+          hidden: true // 菜单栏不显示
+          // hidden: false // 菜单栏显示
         }
       }
     ]
@@ -30,7 +32,9 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "guide" */ '@/views/guide/index.vue'),
         meta: {
           title: 'Guide',
-          icon: 'guide'
+          icon: 'guide',
+          // 当guide路由激活时高亮选中的是documentation/index菜单
+          activeMenu: '/documentation/index'
         }
       }
     ]
@@ -41,21 +45,24 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
     redirect: '/system/user',
     meta: {
       title: 'System',
-      icon: 'lock'
+      icon: 'lock',
+      alwaysShow: true // 根路由始终显示， 哪怕只有一个子路由
     },
     children: [
       {
         path: 'menu',
         component: () => import(/* webpackChunkName: "menu" */ '@/views/system/menu.vue'),
         meta: {
-          title: 'Menu Management'
+          title: 'Menu Management',
+          hidden: true 
         }
       },
       {
         path: 'role',
         component: () => import(/* webpackChunkName: "role" */ '@/views/system/role.vue'),
         meta: {
-          title: 'Role Management'
+          title: 'Role Management',
+          hidden: true
         }
       },
       {
@@ -95,7 +102,8 @@ export const constantRoutes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
         meta: {
           title: 'Dashboard',
-          icon: 'dashboard'
+          // icon: 'dashboard'
+          icon: 'el-icon-platform-eleme'
         }
       }
     ]

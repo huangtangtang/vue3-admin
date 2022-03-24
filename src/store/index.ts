@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-
 export interface State {
     count: number
 }

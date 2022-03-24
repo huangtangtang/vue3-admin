@@ -1,8 +1,11 @@
 <template>
-  <div class="sidebar-item-container">
+  <div
+    v-if="!item.meta || !item.meta.hidden"
+    class="sidebar-item-container"
+  >
     <!-- 只渲染一个路由 并且路由只有一个子路由时直接渲染这个子路由 -->
     <template
-      v-if="theOnlyOneChildRoute && !theOnlyOneChildRoute.children"
+      v-if="isRenderSingleRoute && theOnlyOneChildRoute"
     >
       <sidebar-item-link
         v-if="theOnlyOneChildRoute.meta"
@@ -11,8 +14,9 @@
         <el-menu-item
           :index="resolvePath(theOnlyOneChildRoute.path)"
         >
+          <i v-if="icon && icon.includes('el-icon')" :class="icon"></i>
           <svg-icon
-            v-if="icon"
+            v-else-if="icon"
             class="menu-icon"
             :icon-class="icon"
           ></svg-icon>
@@ -29,21 +33,27 @@
       popper-append-to-body
     >
       <template #title>
+        <i
+          v-if="item.meta && item.meta.icon.includes('el-icon')"
+          :class="icon"
+        ></i>
         <svg-icon
-          v-if="item.meta.icon"
+          v-else-if="item.meta && item.meta.icon"
           class="menu-icon"
           :icon-class="item.meta.icon"
         ></svg-icon>
-        <span class="submenu-title">{{ item.meta.title }}</span>
+        <span v-if="item.meta" class="submenu-title">{{ item.meta.title }}</span>
       </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-      >
-      </sidebar-item>
+      <template v-if="item.children">
+        <sidebar-item
+          v-for="child in item.children"
+          :key="child.path"
+          :is-nest="true"
+          :item="child"
+          :base-path="resolvePath(child.path)"
+        >
+        </sidebar-item>
+      </template>
     </el-submenu>
   </div>
 </template>
@@ -51,9 +61,9 @@
 <script lang="ts">
 import path from 'path'
 import { defineComponent, PropType, computed, toRefs } from 'vue'
-import { RouteRecordRaw } from 'vue-router'
 import SidebarItemLink from './SidebarItemLink.vue'
 import { isExternal } from '@/utils/validate'
+import { MenuItemRouter } from '@/router/type'
 
 export default defineComponent({
   name: 'SidebarItem',
@@ -62,7 +72,7 @@ export default defineComponent({
   },
   props: {
     item: {
-      type: Object as PropType<RouteRecordRaw>,
+      type: Object as PropType<MenuItemRouter>,
       required: true
     },
     basePath: {
@@ -76,6 +86,7 @@ export default defineComponent({
     // 子路由数量
     const showingChildNumber = computed(() => {
       const children = (props.item.children || []).filter(child => {
+        // hidden属性控制路由是否渲染成菜单 像login 401 404等路由都不需要渲染成菜案
         if (child.meta && child.meta.hidden) return false
         return true
       })
@@ -92,24 +103,28 @@ export default defineComponent({
       // 子路由只有一个时 并且做个hidden筛选
       if (item.value.children) {
         for (const child of item.value.children) {
-          if (!child.meta || !child.meta.hidden) { // hidden属性控制路由是否渲染成菜单
+          // hidden属性控制路由是否渲染成菜单 像login 401 404等路由都不需要渲染成菜单
+          if (!child.meta || !child.meta.hidden) {
             return child
           }
         }
       }
 
       // showingChildNumber === 0
-      // 没有可渲染chiildren时 把当前路由item作为仅有的子路由渲染
+      // 没有可渲染chiildren时 就渲染当前父路由item
       return {
         ...props.item,
         path: '' // resolvePath避免resolve拼接时 拼接重复
       }
     })
 
+    // 是否有可渲染子路由
+    const noShowingChildren = computed(() => showingChildNumber.value === 0)
+
     // menu icon
     const icon = computed(() => {
       // 子路由 如果没有icon就用父路由的
-      return theOnlyOneChildRoute.value?.meta?.icon || (props.item.meta && props.item.meta.icon)
+      return (theOnlyOneChildRoute.value?.meta?.icon || (props.item.meta && props.item.meta.icon)) as string
     })
 
     // 拼接路径 父路径+子路径（相对路径）
@@ -122,10 +137,19 @@ export default defineComponent({
       return path.resolve(props.basePath, childPath)
     }
 
+    // 设置 alwaysShow: true，这样它就会忽略上面定义的规则，一直显示根路由 哪怕只有一个子路由也会显示为嵌套的路由菜单
+    const alwaysShowRootMenu = computed(
+      () => props.item.meta && props.item.meta.alwaysShow
+    )
+
+    // 是否只有一条可渲染路由
+    const isRenderSingleRoute = computed(() => !alwaysShowRootMenu.value && (!theOnlyOneChildRoute.value?.children || noShowingChildren.value))
+
     return {
       theOnlyOneChildRoute,
       icon,
-      resolvePath
+      resolvePath,
+      isRenderSingleRoute
     }
   }
 })
