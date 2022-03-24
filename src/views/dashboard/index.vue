@@ -12,7 +12,7 @@
 import { getCurrentInstance } from 'vue'
 const { proxy } = getCurrentInstance()!
 
-const sayHi = () => {
+const sayHi = () => {   
   proxy?.$message.success("恭喜你，这是一条成功消息")
 }
 </script>
