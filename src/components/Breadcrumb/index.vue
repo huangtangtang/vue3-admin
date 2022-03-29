@@ -80,9 +80,7 @@ export default defineComponent({
       getBreadcrumb();
     });
 
-    watch(
-      () => route.path,
-      () => {
+    watch(() => route.path,() => {
         getBreadcrumb();
       }
     );

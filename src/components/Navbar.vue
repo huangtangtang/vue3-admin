@@ -26,7 +26,6 @@ export default defineComponent({
     };
     // 从getters中获取sidebar
     const sidebar = computed(() => store.getters.sidebar);
-
     return {
       toggleSidebar,
       sidebar,

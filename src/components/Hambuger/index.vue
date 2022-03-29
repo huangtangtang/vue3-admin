@@ -44,25 +44,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.hamburger-container {
-  line-height: 46px;
-  height: 100%;
-  float: left;
-  cursor: pointer;
-  transition: background 0.3s;
-  -webkit-tap-highlight-color: transparent;
-  &:hover {
-    background: rgba(0, 0, 0, 0.025);
+  .hamburger-container {
+    line-height: 46px;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    transition: background .3s;
+    -webkit-tap-highlight-color: transparent;
+    &:hover {
+      background: rgba(0, 0, 0, .025);
+    }
   }
-}
-.hamburger {
-  display: inline-block;
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
-}
+  .hamburger {
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+  }
 
-.hamburger.is-active {
-  transform: rotate(180deg);
-}
+  .hamburger.is-active {
+    transform: rotate(180deg);
+  }
 </style>

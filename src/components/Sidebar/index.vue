@@ -26,7 +26,7 @@ import { useRoute } from 'vue-router'
 import variables from '@/styles/variables.module.scss'
 import { routes } from '@/router'
 import SidebarItem from './SidebarItem.vue'
-import { useStore } from '@/store'
+import { useStore } from '@/store' // sidebar组件里接入store.getter.sidebar 
 
 export default defineComponent({
   name: 'Sidebar',
