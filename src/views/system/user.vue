@@ -1,10 +1,7 @@
+<script setup lang="ts"></script>
+
 <template>
-    <div>
-        <h1>User page</h1>
-    </div>
+  <div>user</div>
 </template>
-<script>
-    export default {
-        name: 'User'
-    }
-</script>
+
+<style scoped lang="scss"></style>

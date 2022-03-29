@@ -1,10 +1,12 @@
-<template>
-    <div>
-        <h1>Menu page</h1>
-    </div>
-</template>
-<script>
-    export default {
-        name: 'Menu'
-    }
+<script setup lang='ts'>
 </script>
+
+<template>
+  <div>
+    menu page
+  </div>
+</template>
+
+<style scoped lang='scss'>
+
+</style>

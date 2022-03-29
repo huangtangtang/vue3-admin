@@ -1,10 +1,12 @@
-<template>
-    <div>
-        <h1> Guide page</h1>
-    </div>
-</template>
-<script>
-    export default {
-        name: 'Guide'
-    }
+<script setup lang='ts'>
 </script>
+
+<template>
+  <div>
+  guide page
+  </div>
+</template>
+
+<style scoped lang='scss'>
+
+</style>

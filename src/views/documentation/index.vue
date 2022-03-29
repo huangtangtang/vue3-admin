@@ -1,10 +1,12 @@
-<template>
-    <div>
-        <h1>Documentation page</h1>
-    </div>
-</template>
-<script>
- export default {
-     name: 'Documentation'
- }
+<script setup lang='ts'>
 </script>
+
+<template>
+  <div>
+  documentation page
+  </div>
+</template>
+
+<style scoped lang='scss'>
+
+</style>
